@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head"></head>
+<body>
+<div th:replace="fragments/header_admin :: header_admin"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="p-5">Manage artists</h1>
+            <table class="table" th:if="${!artists.isEmpty()}">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Image</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="artist: ${artists}">
+                    <th scope="row" th:text="${artist.id}"></th>
+                    <td th:text="${artist.name}"></td>
+                    <td th:text="${artist.description}"></td>
+                    <td><img src="#" th:src="${artist.imageUrl}" class="img-thumbnail"  style="max-height: 150px;"/></td>
+                    <td><a href="#" th:href="@{'/admin/artist/' + ${artist.id}}"> <i class="fas fa-pencil-alt"></i></a></td>
+                </tr>
+                </tbody>
+            </table>
+            <h5 class="p-5">Register new Artist</h5>
+            <form class="p-3" method="post" action="#" th:action="@{/admin/artist}" th:object="${artistForm}">
+                <input type="hidden" th:field="*{id}" />
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input class="form-control" type="text" id="name" th:field="*{name}"/>
+                    <div th:if="${#fields.hasErrors('name')}" class="alert alert-danger mt-3" th:errors="*{name}"></div>
+                </div>
+                <div class="form-group">
+                    <label for="desc">Description</label>
+                    <textarea class="form-control" id="desc" rows="3" th:field="*{description}"></textarea>
+                    <div th:if="${#fields.hasErrors('description')}" class="alert alert-danger mt-3" th:errors="*{description}"></div>
+                </div>
+                <div class="form-group">
+                    <label for="image">Image</label>
+                    <input class="form-control" type="text" id="image" th:field="*{imageUrl}"/>
+                    <div th:if="${#fields.hasErrors('imageUrl')}" class="alert alert-danger mt-3" th:errors="*{imageUrl}"></div>
+                </div>
+                <input class="btn btn-primary float-right" type="submit" value="Send"/>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

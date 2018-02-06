@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head"></head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+             <div class="card" style="width: 40rem;" th:each="event : ${events}">
+                <img class="card-img-top" src="#" th:src="${event.artists[0].imageUrl}" alt="Card image cap" />
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${event.title} + ' (' + ${event.artists[0].name} + ')'"></h5>
+                    <!--<p class="card-text" th:text="${event.description}"></p>-->
+                    <p class="card-text" th:text="'Date: ' + ${#temporals.format(event.dateTime, 'dd-MM-yyyy à HH:mm')}"></p>
+                    <p class="card-text" th:text="'Prix: ' + ${#numbers.formatDecimal(event.price/100.0, 0, 'DEFAULT', 2, 'DEFAULT')} + ' €'"></p>
+                    <p class="card-text" th:text="'Lieu: ' + ${event.venue.name} + '(' + ${event.venue.city} + ')'"></p>
+                    <a href="#" class="btn btn-primary" th:if="${event.ticketsAvailable > 0}" th:href="@{'/event/' + ${event.id}}">Tickets</a>
+                    <p class="card-text" th:if="${event.ticketsAvailable==0}">COMPLET</p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

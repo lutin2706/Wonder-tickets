@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head"></head>
+<body>
+<div th:replace="fragments/header_admin :: header_admin"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-10">
+            <h1 class="p-5" th:text="'Annuler l\'événement ' + ${event.title}"></h1>
+            <div class="alert alert-danger" role="alert">
+                <p>Vous êtes sur le point d'annuler un événement. Cette action est irréversible.</p>
+                <p>Elle aura pour conséquence d'annuler toutes les réservations liées à cet événement, et un mail sera envoyé à toutes les personnes ayant réservé une place.</p>
+            </div>
+            <p>Voulez-vous vraiment annuler cet événement ?</p>
+            <form class="p-3" method="post" action="#" th:action="@{/admin/event/cancel}">
+                <input type="hidden" name="eventId" th:value="${event.id}" />
+                <input class="btn btn-primary p-1" type="reset" value="Annuler" />
+                <input class="btn btn-primary p-1" type="submit" value="Oui, je veux annuler l'événement et toutes les réservations liées"/>
+            </form>
+            <p>Liste des réservations liées à cet événement :</p>
+            <table class="table" th:if="${!bookings.isEmpty()}">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Event</th>
+                    <th scope="col">User</th>
+                    <th scope="col">Nombre de tickets</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="booking: ${bookings}">
+                    <th scope="row" th:text="${booking.id}"></th>
+                    <td th:text="${booking.event.title}"></td>
+                    <td th:text="${booking.user.username}"></td>
+                    <td th:text="${booking.tickets.size()}"></td>
+                    <!--<td><a href="#" th:href="@{'/admin/venue/' + ${venue.id}}"> <i class="fas fa-pencil-alt"></i></a></td>-->
+                </tr>
+                </tbody>
+            </table>
+            <!--<h5 class="p-5">Register new Venue</h5>-->
+            <!--<form class="p-3" method="post" action="#" th:action="@{/admin/venue}" th:object="${venueForm}">-->
+                <!--<input type="hidden" th:field="*{id}" />-->
+                <!--<div class="form-group">-->
+                    <!--<label for="name">Name</label>-->
+                    <!--<input class="form-control" type="text" id="name" th:field="*{name}"/>-->
+                    <!--<div th:if="${#fields.hasErrors('name')}" class="alert alert-danger mt-3" th:errors="*{name}"></div>-->
+                <!--</div>-->
+                <!--<div class="form-group">-->
+                    <!--<label for="city">City</label>-->
+                    <!--<input class="form-control" type="text" id="city" th:field="*{city}"/>-->
+                    <!--<div th:if="${#fields.hasErrors('city')}" class="alert alert-danger mt-3" th:errors="*{city}"></div>-->
+                <!--</div>-->
+                <!--<input class="btn btn-primary float-right" type="submit" value="Send"/>-->
+            <!--</form>-->
+        </div>
+    </div>
+</div>
+</body>
+</html>

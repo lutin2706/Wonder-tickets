@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+</head>
+<body>
+    <p>Merci pour votre commande sur notre site internet. Nous vous confirmons la commande suivante:</p>
+    <h5 th:text="${booking.event.title} + ' (' + ${booking.event.artists[0].name} + ')'"></h5>
+    <p th:text="${booking.event.description}"></p>
+    <p th:text="'Date: ' + ${#temporals.format(booking.event.dateTime, 'dd-MM-yyyy à HH:mm')}"></p>
+    <p th:text="'Lieu: ' + ${booking.event.venue.name} + '(' + ${booking.event.venue.city} + ')'"></p>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Nombre de places</th>
+            <th>Prix unitaire</th>
+            <th>Prix total</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td th:text="${booking.tickets.size()}"></td>
+                <td th:text="${#numbers.formatDecimal(booking.event.price/100.0, 0, 'DEFAULT', 2, 'DEFAULT')} + ' €'"></td>
+                <td th:text="${#numbers.formatDecimal(booking.event.price/100.0 * booking.tickets.size(), 0, 'DEFAULT', 2, 'DEFAULT')} + ' €'"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p>Vos tickets : (à scanner à l'entrée)</p>
+    <p th:each="image : ${imageResourceNames}">
+        <img src="sample.png" th:src="|cid:${image}|" />
+    </p>
+</body>
+</html>

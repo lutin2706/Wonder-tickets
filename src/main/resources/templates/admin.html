@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments/head :: head"></head>
+<body>
+<div th:replace="fragments/header_admin :: header_admin"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="p-5">Administration Panel</h1>
+            <p sec:authorize="hasRole('ADMIN')"><a href="#" th:href="@{/admin/employee}">Gérer les employés</a></p>
+            <div sec:authorize="hasRole('EMPLOYEE')">
+                <p><a href="#" th:href="@{/admin/event}">Gérer les événements</a></p>
+                <p><a href="#" th:href="@{/admin/artist}">Gérer les artistes</a></p>
+                <p><a href="#" th:href="@{/admin/venue}">Gérer les lieux</a></p>
+                <p><a href="#" th:href="@{/admin/booking}">Gérer les réservations</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head"></head>
+<body>
+<div th:replace="fragments/header_admin :: header_admin"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <h1 class="p-5">Manage venues</h1>
+            <table class="table" th:if="${!venues.isEmpty()}">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">City</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="venue: ${venues}">
+                    <th scope="row" th:text="${venue.id}"></th>
+                    <td th:text="${venue.name}"></td>
+                    <td th:text="${venue.city}"></td>
+                    <td><a href="#" th:href="@{'/admin/venue/' + ${venue.id}}"> <i class="fas fa-pencil-alt"></i></a></td>
+                </tr>
+                </tbody>
+            </table>
+            <h5 class="p-5">Register new Venue</h5>
+            <form class="p-3" method="post" action="#" th:action="@{/admin/venue}" th:object="${venueForm}">
+                <input type="hidden" th:field="*{id}" />
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input class="form-control" type="text" id="name" th:field="*{name}"/>
+                    <div th:if="${#fields.hasErrors('name')}" class="alert alert-danger mt-3" th:errors="*{name}"></div>
+                </div>
+                <div class="form-group">
+                    <label for="city">City</label>
+                    <input class="form-control" type="text" id="city" th:field="*{city}"/>
+                    <div th:if="${#fields.hasErrors('city')}" class="alert alert-danger mt-3" th:errors="*{city}"></div>
+                </div>
+                <input class="btn btn-primary float-right" type="submit" value="Send"/>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
